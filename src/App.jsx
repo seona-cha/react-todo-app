@@ -15,19 +15,21 @@ function fetchTodos() {
 function App() {
   const [todos, setTodos] = useState(fetchTodos());
 
+  // 초기 데이터 : 빈 배열
+  localStorage.setItem("todolist", JSON.stringify(todos));
+
   const removeTodo = (todo) => {
     const result = todos.filter(todoitem => todoitem !== todo);
     
     setTodos(result);
-    localStorage.removeItem(todo);
+    localStorage.setItem("todolist", JSON.stringify(todos));
   }
 
   const addTodo = (todo) => {
-    localStorage.setItem(todo, todo)
+    const result = [...todos, todo];
 
-    setTodos((currentTodos) => {
-        return [...currentTodos, todo]
-    })
+    setTodos(result);
+    localStorage.setItem("todolist", JSON.stringify(todos));
   }
 
   return (
