@@ -33,10 +33,12 @@ function App() {
   }
 
   return (
-    <div>
+    <div class="todo-wrapper">
       <TodoHeader />
-      <TodoInput addTodo={addTodo} />
-      <TodoList todos={todos} onTodoRemove={removeTodo} />
+      <div className="todo-container">
+        <TodoInput addTodo={addTodo} />
+        <TodoList todos={todos} onTodoRemove={removeTodo} />
+      </div>
     </div>
   )
 }

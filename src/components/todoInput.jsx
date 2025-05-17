@@ -14,9 +14,9 @@ function TodoInput({ addTodo }) {
 	}
 
 	return (
-		<div>
+		<div class="todo-input-container">
 			<input type="text" value={inputText} onChange={handleInput} />
-			<button onClick={onTodoAdd}>add</button>
+			<button onClick={onTodoAdd}>추가</button>
 		</div>
 	)
 }
