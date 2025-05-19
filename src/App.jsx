@@ -4,26 +4,16 @@ import TodoList from './components/todoList'
 import { useState } from 'react'
 
 function fetchTodos() {
-  const result = [];
-  // 로컬 스토리지에 저장된 데이터 (문자열)
   const savedTodolist = localStorage.getItem("todolist");
-  // 문자열을 배열로 변환
-  const todolist = JSON.parse(savedTodolist);
-
-  for (let i = 0; i < todolist.length; i++) {
-    const value = todolist[i];
-    result.push(value);
-  }
-  return result;
+  return savedTodolist ? JSON.parse(savedTodolist) : [];
 }
 
 function App() {
-  const [idCount, setIdCount] = useState(1);
   const [todos, setTodos] = useState(fetchTodos());
 
   // 초기 데이터 : 빈 배열
-  if (localStorage.length === 0) {
-    localStorage.setItem("todolist", JSON.stringify(result));
+  if (!localStorage.getItem("todolist")) {
+    localStorage.setItem("todolist", JSON.stringify([]));  // 빈 배열로 초기화
   }
 
   const removeTodo = (todo) => {
