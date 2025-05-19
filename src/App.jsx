@@ -10,6 +10,8 @@ function fetchTodos() {
 
 function App() {
   const [todos, setTodos] = useState(fetchTodos());
+  const [idCount, setIdCount] = useState(fetchTodos().at(-1)?.id + 1 || 1); 
+  // (초기 id 값 = 마지막 todo의 id + 1, 빈 배열일 경우 1)
 
   // 초기 데이터 : 빈 배열
   if (!localStorage.getItem("todolist")) {
