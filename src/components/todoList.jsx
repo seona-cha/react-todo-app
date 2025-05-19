@@ -1,18 +1,17 @@
-import useTodos from "../hooks/useTodos";
-
-function TodoList({ todos, onTodoRemove, onTodoDone }) {
-  const { filter, setFilter, filteredTodos } = useTodos();
+function TodoList({ todos, onTodoRemove, onTodoDone, filter, setFilter, filteredTodos }) {
 
 	return (
 		<div className="todo-list-container">
       <div className="filter-container">
-        <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>전체 ({todos.length})</button>
-        <button className={filter === "todo" ? "active" : ""} onClick={() => setFilter("todo")}>해야 할 일 ({todos.filter(todo => !todo.isDone).length})</button>
-        <button className={filter === "done" ? "active" : ""} onClick={() => setFilter("done")}>완료한 일 ({todos.filter(todo => todo.isDone).length})</button>
+        <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>✅ 전체 <small>({todos.length})</small></button>
+        <button className={filter === "todo" ? "active" : ""} onClick={() => setFilter("todo")}>💣 해야 할 일 <small>({todos.filter(todo => !todo.isDone).length})</small></button>
+        <button className={filter === "done" ? "active" : ""} onClick={() => setFilter("done")}>🏆 완료한 일 <small>({todos.filter(todo => todo.isDone).length})</small></button>
       </div>
 			{filteredTodos.length === 0 && filter !== "done" ? (
-				<div>할 일이 없습니다.</div>
-			) : (
+				<div className="empty-box">할 일이 없습니다. <br /> dobby is free!</div>
+			) : filteredTodos.length === 0 && filter === "done" ? (
+        <div className="empty-box">한 게 없습니다. <br /> 뭐라도 좀 해 보세요.</div>
+      ) : (
 				<div>
 					<ul>
 						{filteredTodos.map((todo) => {

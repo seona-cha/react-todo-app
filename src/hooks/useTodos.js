@@ -5,7 +5,6 @@ export default function useTodos() {
   const [idCount, setIdCount] = useState(fetchTodos().at(-1)?.id + 1 || 1);
   // (초기 id 값 = 마지막 todo의 id + 1, 빈 배열일 경우 1)
 
-
   function fetchTodos() {
     const savedTodolist = localStorage.getItem("todolist");
     return savedTodolist ? JSON.parse(savedTodolist) : [];
@@ -23,8 +22,8 @@ export default function useTodos() {
     localStorage.setItem("todolist", JSON.stringify(result));
   }
 
-  const addTodo = (todo) => {
-    const result = [...todos, { id: idCount, name: todo, isDone: false}];
+  const addTodo = (todo, filter) => {
+    const result = [...todos, { id: idCount, name: todo, isDone: filter === "done" ? true : false}];
     setIdCount(idCount + 1);
     setTodos(result);
     localStorage.setItem("todolist", JSON.stringify(result));

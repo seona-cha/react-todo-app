@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function TodoInput({ addTodo }) {
+function TodoInput({ addTodo, filter }) {
 	const [inputText, setInputText] = useState('')
 
 	const handleInput = (event) => {
@@ -9,7 +9,7 @@ function TodoInput({ addTodo }) {
 	}
 
 	const onTodoAdd = () => {
-		addTodo(inputText);
+		addTodo(inputText, filter);
 		setInputText('');
 	}
 
