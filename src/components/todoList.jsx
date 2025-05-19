@@ -4,9 +4,9 @@ function TodoList({ todos, onTodoRemove, onTodoDone }) {
 	const [filter, setFilter] = useState("all");
 
 	const filteredTodos = todos.filter((todo) => {
-		if (filter === "all") return true;
-		if (filter === "todo") return !todo.isDone;
-		if (filter === "done") return todo.isDone;
+		filter === "all"?  true:
+		filter === "todo"? !todo.isDone:
+		todo.isDone;
 	});
 
 	return (
