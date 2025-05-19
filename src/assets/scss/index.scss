@@ -17,8 +17,8 @@
   width: 90%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 15px;
-  border: 1px solid #ccc;
+  padding: 30px 20px;
+  border: 1px solid #eee;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   border-radius: 16px;
 }
@@ -52,8 +52,8 @@
   button {
     border-radius: 0 12px 12px 0;
     padding: 10px 20px;
-    border: 1px solid #333;
-    background: #333;
+    border: 1px solid rgb(58, 172, 170);
+    background: rgb(58, 172, 170);
     color: #fff;
     border-left: none;
     white-space: nowrap;
@@ -64,6 +64,38 @@
 .todo-list-container {
   margin-top: 2rem;
 
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      font-family: 'Roboto', '42dot Sans', sans-serif;
+      background: #f8f8f8;
+      font-size: 1rem;
+      box-sizing: border-box;
+
+      &.active {
+        background: rgb(167, 221, 219);
+        font-weight: bold;
+      }
+
+      &:first-child {
+        border-radius: 12px 0 0 12px;
+      }
+
+      &:last-child {
+        border-radius: 0 12px 12px 0;
+      }
+    }
+  }
+
+
+
   ul {
     li {
       display: flex;
@@ -71,20 +103,20 @@
       align-items: center;
       gap: 5px;
       padding: 10px;
-      border-bottom: 1px solid #eee;    
+      border-bottom: 1px solid #eee;
 
       &.done {
-        span {
+        label {
           text-decoration: line-through;
           color: #ddd;
         }
       }
-      
-      span {
+
+      label {
         font-size: 1.2rem;
         margin-right: auto;
       }
-      
+
       button {
         position: relative;
         border: none;
@@ -133,7 +165,7 @@
         //   border-radius: 10px;
         //   background: #bbb;
         //   transform: rotate(45deg);
-          
+
         // }
       }
     }
