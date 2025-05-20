@@ -8,7 +8,7 @@ function TodoList({ todos, onTodoRemove, onTodoDone, filter, setFilter, filtered
         <button className={filter === "done" ? "active" : ""} onClick={() => setFilter("done")}>🏆 완료한 일 <small>({todos.filter(todo => todo.isDone).length})</small></button>
       </div>
 			{filteredTodos.length === 0 && filter !== "done" ? (
-				<div className="empty-box">할 일이 없습니다. <br /> dobby is free!</div>
+				<div className="empty-box">할 일이 없습니다. <br /> dobby is free</div>
 			) : filteredTodos.length === 0 && filter === "done" ? (
         <div className="empty-box">한 게 없습니다. <br /> 뭐라도 좀 해 보세요.</div>
       ) : (

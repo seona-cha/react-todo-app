@@ -4,14 +4,16 @@ import TodoList from './components/todoList'
 import useTodos from './hooks/useTodos'
 
 function App() {
-  const { todos, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos } = useTodos();
+  const { todos, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck } = useTodos();
 
   return (
     <div className="todo-container">
       <TodoHeader />
       <TodoInput
-        addTodo={addTodo}
-        filter={filter}
+        inputText={inputText}
+        handleInput={handleInput}
+        onTodoAdd={onTodoAdd}
+        isEnterCheck={isEnterCheck}
       />
       <TodoList
         todos={todos}

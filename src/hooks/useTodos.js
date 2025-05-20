@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 export default function useTodos() {
   const [todos, setTodos] = useState(fetchTodos());
-  const [idCount, setIdCount] = useState(fetchTodos().at(-1)?.id + 1 || 1);
-  // (초기 id 값 = 마지막 todo의 id + 1, 빈 배열일 경우 1)
+  const [idCount, setIdCount] = useState(fetchTodos().at(-1)?.id + 1 || 1); // (초기 id 값 = 마지막 todo의 id + 1, 빈 배열일 경우 1)
+  const [inputText, setInputText] = useState('')
 
   function fetchTodos() {
     const savedTodolist = localStorage.getItem("todolist");
@@ -12,20 +12,23 @@ export default function useTodos() {
 
   // 초기 데이터 : 빈 배열
   if (!localStorage.getItem("todolist")) {
-    localStorage.setItem("todolist", JSON.stringify([]));  // 빈 배열로 초기화
+    localStorage.setItem("todolist", JSON.stringify([]));
   }
 
   const removeTodo = (todo) => {
     const result = todos.filter(todoitem => todoitem.id !== todo.id);
 
     setTodos(result);
+
     localStorage.setItem("todolist", JSON.stringify(result));
   }
 
   const addTodo = (todo, filter) => {
     const result = [...todos, { id: idCount, name: todo, isDone: filter === "done" ? true : false}];
-    setIdCount(idCount + 1);
+
+    setIdCount(idCount + 1); // 추가될때마다 idCount 증가
     setTodos(result);
+
     localStorage.setItem("todolist", JSON.stringify(result));
   }
 
@@ -34,11 +37,28 @@ export default function useTodos() {
       if (item.id === todo.id) {
         item.isDone = !item.isDone;
       }
+      
       return item;
     })
     setTodos(result);
     localStorage.setItem("todolist", JSON.stringify(result));
   }
+  
+	const handleInput = (event) => {
+		const value = event.target.value;
+		setInputText(value)
+	}
+
+	const onTodoAdd = () => {
+		addTodo(inputText, filter);
+		setInputText('');
+	}
+
+	const isEnterCheck = (event) => {
+		if (event.key === 'Enter') {
+			onTodoAdd();
+		}
+	}
 
   const [filter, setFilter] = useState("all");
 
@@ -49,5 +69,5 @@ export default function useTodos() {
 	});
 
 
-  return {todos, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos }
+  return {todos, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck }
 }
