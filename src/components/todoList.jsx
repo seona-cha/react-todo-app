@@ -1,4 +1,15 @@
+import Lottie from "react-lottie";
+import checkAnimation from "../assets/lottie/check.json";
+
 function TodoList({ todos, onTodoRemove, onTodoDone, filter, setFilter, filteredTodos }) {
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: checkAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
 
 	return (
 		<div className="todo-list-container">
@@ -10,13 +21,18 @@ function TodoList({ todos, onTodoRemove, onTodoDone, filter, setFilter, filtered
 			{filteredTodos.length === 0 && filter !== "done" ? (
 				<div className="empty-box">할 일이 없습니다. <br /> dobby is free</div>
 			) : filteredTodos.length === 0 && filter === "done" ? (
-        <div className="empty-box">한 게 없습니다. <br /> 뭐라도 좀 해 보세요.</div>
+        <div className="empty-box">한 게 없습니다. <br /> 뭐라도 좀 해 볼까요?</div>
       ) : (
 				<div>
 					<ul>
 						{filteredTodos.map((todo) => {
 							return (
 								<li className={todo.isDone ? "done" : ""} key={todo.id}>
+                  {/* <Lottie
+                    options={defaultOptions}
+                    height={400}
+                    width={400}
+                  /> */}
 					        <input id={todo.id} type="checkbox" defaultChecked={todo.isDone} onChange={() => onTodoDone(todo)} />
 									<label htmlFor={todo.id}>{todo.name}</label>
 									<button onClick={() => onTodoRemove(todo)}>
