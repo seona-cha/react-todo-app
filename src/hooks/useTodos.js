@@ -15,6 +15,16 @@ export default function useTodos() {
     localStorage.setItem("todolist", JSON.stringify([]));
   }
 
+  const moveTodo = (idx1, idx2) => {
+    const result = [...todos];
+    const temp = result[idx1];
+    result[idx1] = result[idx2];
+    result[idx2] = temp;
+
+    setTodos(result);
+    localStorage.setItem("todolist", JSON.stringify(result));
+  }
+
   const removeTodo = (todo) => {
     const result = todos.filter(todoitem => todoitem.id !== todo.id);
 
@@ -69,5 +79,5 @@ export default function useTodos() {
 	});
 
 
-  return {todos, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck }
+  return {todos, moveTodo, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck }
 }

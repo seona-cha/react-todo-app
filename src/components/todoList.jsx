@@ -1,23 +1,44 @@
-import Lottie from "react-lottie";
-import checkAnimation from "../assets/lottie/check.json";
+import { useEffect, useRef } from "react";
 
-function TodoList({ todos, onTodoRemove, onTodoDone, filter, setFilter, filteredTodos }) {
-  const defaultOptions = {
-    loop: false,
-    autoplay: true,
-    animationData: checkAnimation,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
-  };
+function TodoList({ todos, moveTodo, onTodoRemove, onTodoDone, filter, setFilter, filteredTodos }) {
+  const dragItemIndex = useRef(null);
+
+  const dragStart = (e, idx) => {
+    e.target.style.transform = "scale(0.9)";
+    e.target.style.opacity = "0.5";
+
+    dragItemIndex.current = idx;
+  }
+
+  const dragEnd = (e) => {
+    e.target.style.removeProperty('transform');
+    e.target.style.removeProperty('opacity');
+  }
+
+  const dragEnter = (e) => {
+    e.target.style.color = "rgb(58, 172, 170)";
+  }
+  
+  const dragOver = (e) => {
+    e.preventDefault();
+  }
+
+  const dragLeave = (e) => {
+    e.target.style.removeProperty('color');
+  }
+
+  const drop = (e, idx) => {
+    e.target.style.removeProperty('color');
+    moveTodo(dragItemIndex.current, idx);
+  }
 
 	return (
 		<div className="todo-list-container">
-      <div className="filter-container">
-        <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>✅ 전체 <small>({todos.length})</small></button>
-        <button className={filter === "todo" ? "active" : ""} onClick={() => setFilter("todo")}>💣 해야 할 일 <small>({todos.filter(todo => !todo.isDone).length})</small></button>
-        <button className={filter === "done" ? "active" : ""} onClick={() => setFilter("done")}>🏆 완료한 일 <small>({todos.filter(todo => todo.isDone).length})</small></button>
-      </div>
+			<div className="filter-container">
+				<button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>✅ 전체 <small>({todos.length})</small></button>
+				<button className={filter === "todo" ? "active" : ""} onClick={() => setFilter("todo")}>💣 해야 할 일 <small>({todos.filter(todo => !todo.isDone).length})</small></button>
+				<button className={filter === "done" ? "active" : ""} onClick={() => setFilter("done")}>🏆 완료한 일 <small>({todos.filter(todo => todo.isDone).length})</small></button>
+			</div>
 			{filteredTodos.length === 0 && filter !== "done" ? (
 				<div className="empty-box">할 일이 없습니다. <br /> dobby is free</div>
 			) : filteredTodos.length === 0 && filter === "done" ? (
@@ -25,15 +46,20 @@ function TodoList({ todos, onTodoRemove, onTodoDone, filter, setFilter, filtered
       ) : (
 				<div>
 					<ul>
-						{filteredTodos.map((todo) => {
+						{filteredTodos.map((todo, index) => {
 							return (
-								<li className={todo.isDone ? "done" : ""} key={todo.id}>
-                  {/* <Lottie
-                    options={defaultOptions}
-                    height={400}
-                    width={400}
-                  /> */}
-					        <input id={todo.id} type="checkbox" defaultChecked={todo.isDone} onChange={() => onTodoDone(todo)} />
+								<li 
+                  className={todo.isDone ? "done" : ""} 
+                  key={todo.id} 
+                  draggable={true} 
+                  onDragStart={(e) => dragStart(e, index)} 
+                  onDragEnd={dragEnd} 
+                  onDragEnter={dragEnter} 
+                  onDragOver={dragOver} 
+                  onDragLeave={dragLeave} 
+                  onDrop={(e) => drop(e, index)}
+                >
+				        <input id={todo.id} type="checkbox" defaultChecked={todo.isDone} onChange={() => onTodoDone(todo)} />
 									<label htmlFor={todo.id}>{todo.name}</label>
 									<button onClick={() => onTodoRemove(todo)}>
 										<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
