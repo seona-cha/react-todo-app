@@ -139,7 +139,13 @@
         margin-right: auto;
       }
 
+      .update-input {
+        width: 100%;
+        font-size: 1.2rem;
+      }
+
       button {
+        flex-shrink: 0;
         position: relative;
         border: none;
         background: none;
@@ -155,40 +161,6 @@
             stroke: #bcbcbc;
           }
         }
-
-        // span {
-        //   position: absolute;
-        //   width: 1px;
-        //   height: 1px;
-        //   overflow: hidden;
-        //   clip: rect(0, 0, 0, 0);
-        //   border: 0;
-        // }
-
-        // &::before {
-        //   content: "";
-        //   position: absolute;
-        //   top: 1px;
-        //   left: 8px;
-        //   width: 2px;
-        //   height: 20px;
-        //   border-radius: 10px;
-        //   background: #bbb;
-        //   transform: rotate(-45deg);
-        // }
-
-        // &::after {
-        //   content: "";
-        //   position: absolute;
-        //   top: 1px;
-        //   left: 8px;
-        //   width: 2px;
-        //   height: 20px;
-        //   border-radius: 10px;
-        //   background: #bbb;
-        //   transform: rotate(45deg);
-
-        // }
       }
     }
   }

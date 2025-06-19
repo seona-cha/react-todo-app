@@ -4,7 +4,7 @@ import TodoList from './components/todoList'
 import useTodos from './hooks/useTodos'
 
 function App() {
-  const { todos, moveTodo, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck } = useTodos();
+  const { todos, moveTodo, updateTodo, changeUpdateMode, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck } = useTodos();
 
   return (
     <div className="todo-container">
@@ -18,6 +18,8 @@ function App() {
       <TodoList
         todos={todos}
         moveTodo={moveTodo}
+        changeUpdateMode={changeUpdateMode}
+        updateTodo={updateTodo}
         onTodoRemove={removeTodo}
         onTodoDone={setTodoDone}
         filter={filter}

@@ -17,11 +17,37 @@ export default function useTodos() {
 
   const moveTodo = (idx1, idx2) => {
     const result = [...todos];
-    const temp = result[idx1];
-    result[idx1] = result[idx2];
-    result[idx2] = temp;
+    [result[idx1], result[idx2]] = [result[idx2], result[idx1]];
 
     setTodos(result);
+
+    localStorage.setItem("todolist", JSON.stringify(result));
+  }
+
+  const changeUpdateMode = (todo) => {
+    const result = todos.map(item => {
+      if (item.id === todo.id) {
+        item.isUpdateMode = !item.isUpdateMode;
+      }
+      return item;
+    })
+
+    setTodos(result);
+
+    localStorage.setItem("todolist", JSON.stringify(result));
+  }
+
+  const updateTodo = (todo, value) => {
+    const result = todos.map(item => {
+      if (item.id === todo.id) {
+        item.name = value;
+      }
+
+      return item;
+    })
+
+    setTodos(result);
+
     localStorage.setItem("todolist", JSON.stringify(result));
   }
 
@@ -34,7 +60,7 @@ export default function useTodos() {
   }
 
   const addTodo = (todo, filter) => {
-    const result = [...todos, { id: idCount, name: todo, isDone: filter === "done" ? true : false}];
+    const result = [...todos, { id: idCount, name: todo, isDone: filter === "done" ? true : false, isUpdateMode: false }];
 
     setIdCount(idCount + 1); // 추가될때마다 idCount 증가
     setTodos(result);
@@ -79,5 +105,5 @@ export default function useTodos() {
 	});
 
 
-  return {todos, moveTodo, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck }
+  return {todos, moveTodo, changeUpdateMode, updateTodo, removeTodo, addTodo, setTodoDone, filter, setFilter, filteredTodos, inputText, handleInput, onTodoAdd, isEnterCheck }
 }
